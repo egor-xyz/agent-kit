@@ -102,7 +102,7 @@ Canonical `handoff.md` schema: [`docs/handoff-spec.md`](./docs/handoff-spec.md).
 
 | Plugin | Description | Commands | Skills | Tools |
 | --- | --- | --- | --- | --- |
-| [`agent-kit`](./plugins/agent-kit) | Portable workflows — starting with session handoff. | `/agent-kit:handoff`, `/agent-kit:handoff-resume` | `handoff-discipline` | all |
+| [`agent-kit`](./plugins/agent-kit) | Portable workflows — starting with session handoff. | `/agent-kit:handoff`, `/agent-kit:handoff-resume` | `auto-handoff` | all |
 
 More workflows coming as additional commands inside the same plugin (or as separate plugins for granular install). [Contribute one](./docs/CONTRIBUTING.md).
 
