@@ -52,7 +52,9 @@ jobs:
       - name: Forbid AI attribution lines
         run: |
           set -e
-          if grep -rnE '(Co-Authored-By:.*Claude|Generated with .*Claude|🤖 Generated)' \
+          # Anchor to line start so doc prose mentioning these patterns
+          # (e.g. quality-bar.md, CONTRIBUTING.md) is not flagged.
+          if grep -rnE '^(Co-Authored-By:.*Claude|Generated with .*Claude|🤖 Generated)' \
               --include="*.md" --include="*.json" --include="*.sh" \
               --exclude-dir=.git --exclude-dir=docs/superpowers .; then
             echo "::error::AI attribution line detected"
