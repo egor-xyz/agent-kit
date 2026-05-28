@@ -1,6 +1,6 @@
 ---
-description: Delete .agents/handoff.md so the next /handoff starts from a clean slate. No-op if the file is already gone.
 allowed-tools: Bash
+description: Delete .agents/handoff.md
 ---
 
 # handoff-clear — delete session state
