@@ -3,7 +3,7 @@ allowed-tools: Bash
 description: Delete .agents/handoff.md
 ---
 
-# handoff-clear — delete session state
+## Your task
 
 Remove `.agents/handoff.md`. Use when the handoff is stale, irrelevant, or you want to start fresh before the next `/handoff`.
 

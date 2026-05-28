@@ -3,7 +3,7 @@ allowed-tools: Bash, Read
 description: Load .agents/handoff.md and resume session
 ---
 
-# handoff-resume — load session state
+## Your task
 
 Load the state, verify the working tree matches, and **stop**. Do not execute the next step until the user explicitly says "go" (or equivalent).
 
