@@ -18,7 +18,7 @@ Long tasks die in three ways: context window fills, the agent crashes, the user 
 
 ## What to do when triggered
 
-1. **Write `.agents/handoff.md` early.** Before context fills, before the risky step. Use the schema from `/agent-kit:handoff` (see [`commands/.agents/handoff.md`](../../commands/.agents/handoff.md) or [`docs/handoff-spec.md`](../../../../docs/handoff-spec.md)).
+1. **Write `.agents/handoff.md` early.** Before context fills, before the risky step. Use the schema from `/handoff` (see [`commands/.agents/handoff.md`](../../commands/.agents/handoff.md) or [`docs/handoff-spec.md`](../../../../docs/handoff-spec.md)).
 2. **Update mid-flight.** When you finish a sub-task, append to `## Changes Made`. When you hit a dead end, append to `## Attempts & Dead Ends` with the verbatim error.
 3. **Keep `## Next Step` current.** It should always be the one specific thing the next agent should do, not "continue the work".
 4. **Do not commit.** Add `.agents/` to `.gitignore` if the project doesn't already. Session state, not project state.
@@ -30,6 +30,6 @@ Long tasks die in three ways: context window fills, the agent crashes, the user 
 
 ## Related
 
-- `/agent-kit:handoff` command — produces the file on demand.
-- `/agent-kit:handoff-resume` command — loads the file in a new session.
+- `/handoff` command — produces the file on demand.
+- `/handoff-resume` command — loads the file in a new session.
 - [`docs/handoff-spec.md`](../../../../docs/handoff-spec.md) — canonical schema.
