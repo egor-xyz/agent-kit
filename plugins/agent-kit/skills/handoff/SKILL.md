@@ -1,12 +1,12 @@
 ---
-description: Dump session state to .agents/handoff.md
-argument-hint: [optional path override, defaults to .agents/handoff.md]
+name: handoff
+description: Use when ending a session with work still in flight - dump session state to .agents/handoff.md (target, git state, files, changes, dead ends, next step) so any agent on any tool can resume cold after /clear, a tool switch, or a new chat.
 allowed-tools: Bash, Read, Write, Edit, Grep, Glob
 ---
 
-# /handoff — dump session state
+# handoff — dump session state
 
-Write a minimal `.agents/handoff.md` so a fresh agent can resume. **Be brief.** Bullets, not prose. Skip empty sections. Create the `.agents/` directory if it doesn't exist.
+Invoked manually via `/handoff` when the user wants to checkpoint, or auto-invoked when this description matches their intent. Write a minimal `.agents/handoff.md` so a fresh agent can resume. **Be brief.** Bullets, not prose. Skip empty sections. Create `.agents/` if it doesn't exist.
 
 ## Workflow
 
@@ -14,7 +14,7 @@ Write a minimal `.agents/handoff.md` so a fresh agent can resume. **Be brief.** 
    ```
    git rev-parse --abbrev-ref HEAD && git log -1 --oneline && git status --short
    ```
-2. **Write `.agents/handoff.md`** using the schema below. `mkdir -p .agents` first. Overwrite if file exists.
+2. **Write `.agents/handoff.md`** using the schema below. `mkdir -p .agents` first. Overwrite if it exists.
 3. **Report** the path and a one-line next-step summary. Stop.
 
 ## Schema
@@ -37,9 +37,9 @@ First line: `_Generated: <ISO-8601 UTC>_`
 
 ## Rules
 
-- No secrets. No absolute user paths. No AI attribution.
+- No secrets. No user-absolute paths. No AI attribution.
 - Bullets > prose. Be terse.
-- Quote errors verbatim (one line in backticks is fine; fenced block only if multi-line).
+- Quote errors verbatim (inline backticks if one line; fenced block only if multi-line).
 - Skip empty sections — don't write "none" or empty tables.
 
-After writing, stop. Wait for `/clear` + `/agent-kit:handoff-resume`.
+After writing, stop. Wait for `/clear` + `/handoff-resume`.

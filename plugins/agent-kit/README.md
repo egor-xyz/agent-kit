@@ -9,7 +9,7 @@ Agent sessions are disposable. Work-in-progress shouldn't be. This plugin ships 
 ## Workflow
 
 ```
-work...  →  /agent-kit:handoff  →  /clear  →  /agent-kit:handoff-resume  →  "go"  →  continue
+work...  →  /handoff  →  /clear  →  /handoff-resume  →  "go"  →  continue
 ```
 
 ## When to use
@@ -28,8 +28,8 @@ work...  →  /agent-kit:handoff  →  /clear  →  /agent-kit:handoff-resume  �
 
 | Command | Purpose |
 | --- | --- |
-| `/agent-kit:handoff` | Dump current session state to `.agents/handoff.md` (auto-populates git state). |
-| `/agent-kit:handoff-resume` | Read `.agents/handoff.md`, verify git state, print Target + Next Step, **wait for user "go"**. |
+| `/handoff` | Dump current session state to `.agents/handoff.md` (auto-populates git state). |
+| `/handoff-resume` | Read `.agents/handoff.md`, verify git state, print Target + Next Step, **wait for user "go"**. |
 
 In tools without namespacing (Cursor, Codex, Gemini, Copilot) the commands are typed as `/handoff` and `/handoff-resume`.
 
@@ -76,11 +76,11 @@ curl -fsSL https://raw.githubusercontent.com/egor-xyz/agent-kit/main/install.sh 
 ```
 You: refactor the auth middleware to use the new token store
 Agent: <does 40 tool calls, hits a wall>
-You: /agent-kit:handoff
+You: /handoff
 Agent: wrote .agents/handoff.md — next step: fix the assertion in tests/auth/test_login.py:42
 
 You: /clear
-You: /agent-kit:handoff-resume
+You: /handoff-resume
 Agent: === RESUMING SESSION ===
        Target: refactor auth middleware to new token store
        Branch: refactor/auth (handoff said: refactor/auth) [MATCH]
