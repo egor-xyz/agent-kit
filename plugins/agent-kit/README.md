@@ -12,14 +12,14 @@ Agent sessions are disposable. Work-in-progress shouldn't be. This plugin ships 
 work...  →  /handoff  →  /clear  →  /handoff-resume  →  "go"  →  continue
 ```
 
-## When to use
+## When to Use
 
 - Long-running task likely to outlast a single session.
 - About to switch tools (Claude Code → Cursor → Codex …) mid-task.
 - Context window getting tight and you need a clean restart.
 - Handing the work to a teammate or another agent.
 
-## When NOT to use
+## When NOT to Use
 
 - Trivial single-shot tasks. `.agents/handoff.md` overhead exceeds the value.
 - Tasks driven turn-by-turn by the user; they are the handoff.
