@@ -6,41 +6,40 @@ allowed-tools: Bash, Read, Write, Edit, Grep, Glob
 
 # /handoff — dump session state
 
-Your job: capture everything a fresh agent needs to continue this work without re-reading the prior conversation. Write the result to `handoff.md` at the repository root (or the path the user provided as an argument).
+Write a minimal `handoff.md` so a fresh agent can resume. **Be brief.** Bullets, not prose. Skip empty sections.
 
 ## Workflow
 
-1. **Gather git state.** Run in parallel:
-   - `git rev-parse --abbrev-ref HEAD`
-   - `git log -1 --oneline`
-   - `git status --short`
-   - `git diff --stat`
-2. **Identify work in flight.** Files touched, what is done, what is pending. Use the conversation history plus `git status`.
-3. **Recall dead ends.** Approaches you tried that did not work, with error messages quoted verbatim.
-4. **Write `handoff.md`** matching the canonical schema below. Overwrite if it exists.
-5. **Report:** print the absolute path to the file and a one-line summary of the next step.
+1. **Git state.** Single bash call, all in parallel:
+   ```
+   git rev-parse --abbrev-ref HEAD && git log -1 --oneline && git status --short
+   ```
+2. **Write `handoff.md`** using the schema below. Overwrite if exists.
+3. **Report** the path and a one-line next-step summary. Stop.
 
-## Schema (every section is required)
+## Schema
 
-Header line: `_Generated: <ISO-8601 UTC timestamp>_`
+First line: `_Generated: <ISO-8601 UTC>_`
 
-Required H2 sections, in this order:
+**Required** (always write):
 
-- `## Target` — one sentence: what the user ultimately wants from this session.
-- `## Current State` — branch, last commit hash + subject, dirty/clean, test status if known.
-- `## Files Under Work` — markdown table: `| path | status | one-line purpose |`.
-- `## Changes Made` — bullets per file, function/line refs where useful.
-- `## Attempts & Dead Ends` — what you tried, why it failed. Quote error output verbatim inside fenced blocks.
-- `## Open Questions / Assumptions` — anything unresolved or assumed.
-- `## Next Step` — the exact command, file:line, or instruction to resume at. Be concrete.
-- `## Context Pointers` — relevant PRs, tickets, threads, prior handoffs. Empty bullet list if none.
+- `## Target` — one sentence: what the user wants.
+- `## Current State` — branch, last commit, dirty/clean.
+- `## Next Step` — exact command or file:line. "Continue" is not a next step.
+
+**Optional** (write only if non-empty; **omit the heading entirely if empty**):
+
+- `## Files Under Work` — table `| path | status | purpose |` when 2+ files in flight.
+- `## Changes Made` — bullets when work is partially done.
+- `## Attempts & Dead Ends` — bullets with verbatim error string when something failed.
+- `## Open Questions` — bullets when something is unresolved.
+- `## Context Pointers` — bullets when PRs/tickets/threads matter.
 
 ## Rules
 
-- **No secrets.** Never write API keys, tokens, or credentials into `handoff.md`.
-- **No user-specific absolute paths.** Use repo-relative paths.
-- **No AI attribution.** Do not add "Generated with …" lines.
-- **Quote errors verbatim.** Future-you needs the exact string to grep.
-- **Be specific in Next Step.** "Continue work" is not a next step. "Run `pytest tests/auth/test_login.py::test_expired_token` and fix the assertion at line 42" is.
+- No secrets. No absolute user paths. No AI attribution.
+- Bullets > prose. Be terse.
+- Quote errors verbatim (one line in backticks is fine; fenced block only if multi-line).
+- Skip empty sections — don't write "none" or empty tables.
 
-After writing, do nothing else. Wait for the user to `/clear` and `/handoff-resume` in a new session.
+After writing, stop. Wait for `/clear` + `/agent-kit:handoff-resume`.

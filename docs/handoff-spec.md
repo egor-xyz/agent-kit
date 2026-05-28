@@ -1,111 +1,108 @@
 # handoff.md — canonical schema
 
-The `handoff.md` file is the portable state artifact produced by `/handoff` and consumed by `/handoff-resume`. It must be readable cold by any agent on any tool. This document defines its required structure.
+`handoff.md` is the portable state artifact produced by `/agent-kit:handoff` and consumed by `/agent-kit:handoff-resume`. Must be readable cold by any agent on any tool. **Keep it brief.** Bullets, not prose. Skip empty sections.
 
 ## File location
 
-- Default: `./handoff.md` at the repository root.
-- Override: argument to `/handoff` or `/handoff-resume`.
-- **Not committed.** Add to `.gitignore` if the project doesn't already.
+- Default: `./handoff.md` at repo root.
+- Override: argument to either command.
+- **Not committed.** Add to `.gitignore`.
 
 ## Header
 
-The very first line of the file must be:
+First line:
 
 ```
-_Generated: <ISO-8601 UTC timestamp>_
+_Generated: <ISO-8601 UTC>
 ```
 
 Example: `_Generated: 2026-05-28T14:32:11Z_`
 
-## Required H2 sections, in order
+## Required sections (always present)
 
 ### `## Target`
 
-One sentence describing what the user ultimately wants from this session. Not what was done — what they want.
+One sentence: what the user wants from this work.
 
-> Example: "Refactor the auth middleware to use the new token store without breaking existing session cookies."
+> Example: `Refactor auth middleware to use the new token store without breaking session cookies.`
 
 ### `## Current State`
 
-Five lines minimum:
+3–5 lines:
 
 - `Branch: <name>`
 - `Last commit: <short-sha> <subject>`
 - `Working tree: clean | dirty`
-- `Tests: passing | failing | unknown (<note>)`
-- `Tool: <agent tool name>` (e.g. Claude Code, Cursor, Codex)
-
-### `## Files Under Work`
-
-Markdown table:
-
-| path | status | one-line purpose |
-| --- | --- | --- |
-| `src/auth/middleware.py` | modified | swap legacy `Session` for `TokenStore` |
-| `tests/auth/test_login.py` | modified, failing | assertion at line 42 needs update |
-
-### `## Changes Made`
-
-Bullets per file. Reference functions or line ranges when useful.
-
-- `src/auth/middleware.py:authenticate()` — replaced `Session.get_user()` with `TokenStore.lookup(token)`.
-- `src/auth/middleware.py:logout()` — added cleanup call.
-
-### `## Attempts & Dead Ends`
-
-What you tried, why it failed. Quote error output verbatim inside fenced blocks.
-
-- Tried `TokenStore.invalidate_all_for_user(user_id)` — does not exist:
-  ```
-  AttributeError: 'TokenStore' object has no attribute 'invalidate_all_for_user'
-  ```
-- Tried bypassing the legacy session cookie — broke `tests/integration/test_cookie_compat.py::test_legacy_session`.
-
-### `## Open Questions / Assumptions`
-
-Bullets. Anything unresolved or assumed.
-
-- Assumed `TokenStore.lookup` returns `None` for unknown tokens (not exception). Confirm against `docs/token-store.md`.
-- Question: should `logout` clear cookies even if token already invalid? Need product decision.
+- `Tests: passing | failing | unknown`
+- `Tool: <Claude Code | Cursor | Codex | …>`
 
 ### `## Next Step`
 
-The exact command, file:line, or instruction to resume at. **Specific.**
+The exact command, file:line, or instruction. **Specific.**
 
-> Good: "Run `pytest tests/auth/test_login.py::test_expired_token -v`. The assertion at line 42 expects `401` but the new flow returns `403`. Decide which is correct and update either the code or the test."
+> Good: `Run pytest tests/auth/test_login.py::test_expired_token. Assertion at line 42 expects 401, new flow returns 403. Decide which is right.`
 >
-> Bad: "Continue work."
+> Bad: `Continue work.`
+
+## Optional sections (omit heading entirely when empty)
+
+Do NOT write the heading with "none" underneath. Skip the whole section.
+
+### `## Files Under Work`
+
+Table, only when 2+ files in flight:
+
+| path | status | purpose |
+| --- | --- | --- |
+| `src/auth/middleware.py` | modified | swap Session → TokenStore |
+| `tests/auth/test_login.py` | modified, failing | assertion at line 42 |
+
+### `## Changes Made`
+
+Bullets when work is partially done:
+
+- `src/auth/middleware.py:authenticate()` — replaced `Session.get_user()` with `TokenStore.lookup(token)`.
+
+### `## Attempts & Dead Ends`
+
+Bullets with verbatim error string (inline backticks if one line, fenced block if multi-line):
+
+- Tried `TokenStore.invalidate_all_for_user(uid)` → `AttributeError: 'TokenStore' object has no attribute 'invalidate_all_for_user'`.
+
+### `## Open Questions`
+
+Bullets only when unresolved:
+
+- Should `logout` clear cookies even if token already invalid? Need product decision.
 
 ### `## Context Pointers`
 
-Bullets. PRs, tickets, threads, prior handoffs, relevant docs. Empty list if none.
+Bullets only when external refs matter:
 
 - PR #482 (depends on this work)
-- Linear ticket AUTH-123
-- Prior handoff: `handoff-2026-05-27.md` (renamed before clearing)
+- Linear AUTH-123
 
 ## Rules
 
-- **No secrets.** Never write API keys, tokens, credentials.
-- **No user-specific absolute paths.** Use repo-relative paths only.
-- **No AI attribution.** Do not add "Generated with…" lines.
-- **Quote errors verbatim.** Future-you will grep them.
-- **Be specific in Next Step.** "Continue" is not a next step.
+- No secrets. No user-absolute paths. No AI attribution.
+- Bullets > prose.
+- Quote errors verbatim.
+- Specific Next Step.
+- Skip empty sections.
 
 ## Why this schema
 
 Each section answers a question the resuming agent will ask:
 
-| Section | Question it answers |
+| Section | Question |
 | --- | --- |
-| Target | What does the user actually want? |
-| Current State | Am I on the same ground as the previous agent? |
-| Files Under Work | What should I focus on? |
-| Changes Made | What's already done — don't redo it. |
-| Attempts & Dead Ends | What's already been ruled out — don't repeat. |
-| Open Questions | What still needs a decision? |
+| Target | What does the user want? |
+| Current State | Am I on the same ground? |
 | Next Step | What is the very next action? |
-| Context Pointers | Where else should I look? |
+| Files Under Work | Where to focus? |
+| Changes Made | What's done — don't redo. |
+| Attempts & Dead Ends | What's ruled out — don't repeat. |
+| Open Questions | What needs a decision? |
+| Context Pointers | Where else to look? |
 
-A section missing means the resuming agent will improvise — which is exactly what handoff is meant to prevent.
+Omitted optional sections = "nothing relevant here." Required sections always present = the spine of the handoff.
