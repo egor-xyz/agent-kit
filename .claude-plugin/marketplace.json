@@ -1,28 +1,22 @@
 {
-  "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "egor-xyz",
   "description": "Egor's marketplace — portable workflows for coding agents.",
   "owner": {
     "name": "Egor Stronhin",
     "email": "i@egor.xyz"
   },
-  "metadata": {
-    "pluginRoot": "./plugins"
-  },
   "plugins": [
     {
       "name": "agent-kit",
-      "source": "./plugins/agent-kit",
-      "description": "Portable workflows for coding agents. First workflow: session handoff (/handoff + /handoff-resume) so agent work survives /clear, tool switches, and new chats.",
-      "category": "workflow",
-      "tags": ["session", "handoff", "context", "resume", "portable", "agent-kit"],
-      "keywords": ["session", "handoff", "context", "resume", "portable", "agent-kit"],
+      "description": "Session handoff workflows for coding agents",
       "author": {
         "name": "Egor Stronhin",
         "email": "i@egor.xyz"
       },
-      "homepage": "https://github.com/egor-xyz/agent-kit",
-      "license": "MIT"
+      "source": "./plugins/agent-kit",
+      "category": "productivity",
+      "homepage": "https://github.com/egor-xyz/agent-kit"
     }
   ]
 }
