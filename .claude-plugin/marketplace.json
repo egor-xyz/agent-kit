@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
+  "name": "agent-kit",
+  "description": "Portable workflows for coding agents — skills, commands, hooks, and configs that survive tool switches.",
+  "owner": {
+    "name": "Egor Stronhin",
+    "email": "i@egor.xyz"
+  },
+  "metadata": {
+    "pluginRoot": "./plugins"
+  },
+  "plugins": [
+    {
+      "name": "session-handoff",
+      "source": "./plugins/session-handoff",
+      "description": "Dump and resume agent session state via handoff.md. Survives /clear, tool switch, or new chat.",
+      "version": "0.1.0",
+      "category": "workflow",
+      "tags": ["session", "handoff", "context", "resume", "portable"],
+      "keywords": ["session", "handoff", "context", "resume"],
+      "author": {
+        "name": "Egor Stronhin",
+        "email": "i@egor.xyz"
+      },
+      "homepage": "https://github.com/egor-xyz/agent-kit",
+      "license": "MIT"
+    }
+  ]
+}
