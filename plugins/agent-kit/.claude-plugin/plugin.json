@@ -1,5 +1,6 @@
 {
   "name": "agent-kit",
+  "version": "0.1.0",
   "description": "Portable workflows for coding agents. First workflow: session handoff (/handoff + /handoff-resume) so agent work survives /clear, tool switches, and new chats.",
   "author": {
     "name": "Egor Stronhin",
