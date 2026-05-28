@@ -3,7 +3,7 @@ allowed-tools: Bash, Read, Write, Edit
 description: Dump session state to .agents/handoff.md
 ---
 
-# handoff — dump session state
+## Your task
 
 Write a minimal `.agents/handoff.md` so a fresh agent can resume. **Be brief.** Bullets, not prose. Skip empty sections. Create `.agents/` if it doesn't exist.
 
