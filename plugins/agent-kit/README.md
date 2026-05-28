@@ -1,10 +1,10 @@
 # agent-kit
 
-> Portable workflows for coding agents. First workflow: session handoff via `handoff.md` — survives `/clear`, tool switches, and new chats.
+> Portable workflows for coding agents. First workflow: session handoff via `.agents/handoff.md` — survives `/clear`, tool switches, and new chats.
 
 ## Purpose
 
-Agent sessions are disposable. Work-in-progress shouldn't be. This plugin ships portable workflows that move state between sessions and tools. The first one is **session handoff**: two commands and a skill that dump and reload session state via a `handoff.md` file readable by any agent on any tool.
+Agent sessions are disposable. Work-in-progress shouldn't be. This plugin ships portable workflows that move state between sessions and tools. The first one is **session handoff**: two commands and a skill that dump and reload session state via a `.agents/handoff.md` file readable by any agent on any tool.
 
 ## Workflow
 
@@ -21,15 +21,15 @@ work...  →  /agent-kit:handoff  →  /clear  →  /agent-kit:handoff-resume  �
 
 ## When NOT to use
 
-- Trivial single-shot tasks. `handoff.md` overhead exceeds the value.
+- Trivial single-shot tasks. `.agents/handoff.md` overhead exceeds the value.
 - Tasks driven turn-by-turn by the user; they are the handoff.
 
 ## Commands
 
 | Command | Purpose |
 | --- | --- |
-| `/agent-kit:handoff` | Dump current session state to `handoff.md` (auto-populates git state). |
-| `/agent-kit:handoff-resume` | Read `handoff.md`, verify git state, print Target + Next Step, **wait for user "go"**. |
+| `/agent-kit:handoff` | Dump current session state to `.agents/handoff.md` (auto-populates git state). |
+| `/agent-kit:handoff-resume` | Read `.agents/handoff.md`, verify git state, print Target + Next Step, **wait for user "go"**. |
 
 In tools without namespacing (Cursor, Codex, Gemini, Copilot) the commands are typed as `/handoff` and `/handoff-resume`.
 
@@ -37,7 +37,7 @@ In tools without namespacing (Cursor, Codex, Gemini, Copilot) the commands are t
 
 | Skill | Trigger |
 | --- | --- |
-| `auto-handoff` | Auto-triggers on long, risky, or session-spanning work to keep `handoff.md` fresh mid-flight. **Not a slash command** — no need to invoke manually. |
+| `auto-handoff` | Auto-triggers on long, risky, or session-spanning work to keep `.agents/handoff.md` fresh mid-flight. **Not a slash command** — no need to invoke manually. |
 
 ## Install
 
@@ -77,7 +77,7 @@ curl -fsSL https://raw.githubusercontent.com/egor-xyz/agent-kit/main/install.sh 
 You: refactor the auth middleware to use the new token store
 Agent: <does 40 tool calls, hits a wall>
 You: /agent-kit:handoff
-Agent: wrote handoff.md — next step: fix the assertion in tests/auth/test_login.py:42
+Agent: wrote .agents/handoff.md — next step: fix the assertion in tests/auth/test_login.py:42
 
 You: /clear
 You: /agent-kit:handoff-resume
@@ -90,7 +90,7 @@ You: go        ← any affirmative: "go", "yes", "continue", "ok"
 Agent: <continues exactly where it stopped>
 ```
 
-## handoff.md schema
+## Schema
 
 See [`docs/handoff-spec.md`](../../docs/handoff-spec.md) for the canonical schema. Required H2 sections: Target, Current State, Files Under Work, Changes Made, Attempts & Dead Ends, Open Questions, Next Step, Context Pointers.
 
