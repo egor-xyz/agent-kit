@@ -37,7 +37,7 @@ In tools without namespacing (Cursor, Codex, Gemini, Copilot) the commands are t
 
 | Skill | Trigger |
 | --- | --- |
-| `handoff-discipline` | Auto-triggers on long tasks; reminds the agent to keep `handoff.md` updated mid-flight. |
+| `auto-handoff` | Auto-triggers on long, risky, or session-spanning work to keep `handoff.md` fresh mid-flight. **Not a slash command** — no need to invoke manually. |
 
 ## Install
 
