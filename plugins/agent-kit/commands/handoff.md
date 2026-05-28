@@ -1,5 +1,5 @@
 ---
-description: Dump the current session state to handoff.md so any agent (same tool or different) can resume cold.
+description: Dump session state to handoff.md
 argument-hint: [optional path override, defaults to ./handoff.md]
 allowed-tools: Bash, Read, Write, Edit, Grep, Glob
 ---
