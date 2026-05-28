@@ -43,4 +43,4 @@ Required H2 sections, in this order:
 - **Quote errors verbatim.** Future-you needs the exact string to grep.
 - **Be specific in Next Step.** "Continue work" is not a next step. "Run `pytest tests/auth/test_login.py::test_expired_token` and fix the assertion at line 42" is.
 
-After writing, do nothing else. Wait for the user to `/clear` and `/resume` in a new session.
+After writing, do nothing else. Wait for the user to `/clear` and `/handoff-resume` in a new session.
