@@ -1,0 +1,13 @@
+{
+  "name": "agent-kit",
+  "private": true,
+  "description": "Portable workflows for coding agents — used only to host semantic-release config.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/egor-xyz/agent-kit.git"
+  },
+  "license": "MIT",
+  "scripts": {
+    "release:dry": "npx semantic-release --dry-run --no-ci"
+  }
+}

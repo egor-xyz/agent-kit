@@ -141,11 +141,33 @@ ci: add commitlint workflow
 
 CI runs `commitlint` on every PR. The PR title and every commit in the PR must match.
 
-## Plugin updates
+## Releases — semantic-release
 
-The marketplace omits `version` from each plugin entry — every commit on `main` counts as a new version. Users get latest changes by running `/plugin marketplace update egor-xyz` followed by **Update now** in the plugin manager.
+Releases are automated by [semantic-release](https://semantic-release.gitbook.io/). On every push to `main`:
 
-If you need to pin to a stable release, tag the commit (`git tag v0.2.0`) and add `"version": "0.2.0"` to the plugin entry for that release branch.
+1. The `release` workflow analyzes commits since the last tag.
+2. If any commit is `feat:`, `fix:`, `perf:`, `refactor:`, `docs:`, or `build:`, it computes the next semver bump:
+   - `feat:` → minor
+   - `fix:` / `perf:` / `refactor:` / `docs:` / `build:` → patch
+   - `BREAKING CHANGE:` footer → major
+3. It updates `CHANGELOG.md`, injects the new version into `plugins/agent-kit/.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json`, commits as `chore(release): X.Y.Z [skip ci]`, tags `vX.Y.Z`, and creates a GitHub release with the changelog.
+
+### Required setup
+
+The release commit needs to bypass branch protection. Choose one:
+
+- **(Recommended) Personal Access Token.** Create a fine-grained PAT with `contents: write` + `pull-requests: write` on this repo. Store as repo secret `RELEASE_TOKEN`. The workflow prefers it over `GITHUB_TOKEN`.
+- **Ruleset bypass.** Add `github-actions[bot]` (Integration, actor_id 15368) to the bypass actor list of the main ruleset, and drop the `required_signatures` rule (semantic-release commits aren't signed by default).
+
+### Plugin updates (user-facing)
+
+Users get the latest released version by running `/plugin marketplace update egor-xyz` then **Update now** in the plugin manager. The `version` field in `marketplace.json` is auto-updated by each release, so Claude Code's update flow detects bumps.
+
+To pin to a specific version, install with `@<version>`:
+
+```
+/plugin install agent-kit@egor-xyz@1.2.3
+```
 
 ## Merging vs duplicating
 
