@@ -14,7 +14,6 @@
       "name": "agent-kit",
       "source": "./plugins/agent-kit",
       "description": "Portable workflows for coding agents. First workflow: session handoff (/handoff + /handoff-resume) so agent work survives /clear, tool switches, and new chats.",
-      "version": "0.1.0",
       "category": "workflow",
       "tags": ["session", "handoff", "context", "resume", "portable", "agent-kit"],
       "keywords": ["session", "handoff", "context", "resume", "portable", "agent-kit"],
