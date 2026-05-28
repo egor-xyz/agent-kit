@@ -4,7 +4,7 @@ argument-hint: [optional path override, defaults to ./handoff.md]
 allowed-tools: Bash, Read
 ---
 
-# /resume — load session state
+# /handoff-resume — load session state
 
 Your job: load the session state written by `/handoff`, verify the working tree matches what the previous session expected, and **stop**. Do not execute the next step until the user explicitly says "go" (or equivalent).
 

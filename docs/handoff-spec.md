@@ -1,11 +1,11 @@
 # handoff.md — canonical schema
 
-The `handoff.md` file is the portable state artifact produced by `/handoff` and consumed by `/resume`. It must be readable cold by any agent on any tool. This document defines its required structure.
+The `handoff.md` file is the portable state artifact produced by `/handoff` and consumed by `/handoff-resume`. It must be readable cold by any agent on any tool. This document defines its required structure.
 
 ## File location
 
 - Default: `./handoff.md` at the repository root.
-- Override: argument to `/handoff` or `/resume`.
+- Override: argument to `/handoff` or `/handoff-resume`.
 - **Not committed.** Add to `.gitignore` if the project doesn't already.
 
 ## Header

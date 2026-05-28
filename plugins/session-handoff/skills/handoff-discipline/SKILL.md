@@ -29,5 +29,5 @@ Long tasks die in three ways: context window fills, the agent crashes, the user 
 ## Related
 
 - `/handoff` command — produces the file.
-- `/resume` command — loads the file in a new session.
+- `/handoff-resume` command — loads the file in a new session.
 - `docs/handoff-spec.md` — canonical schema.
