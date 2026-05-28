@@ -1,5 +1,5 @@
 ---
-description: Load handoff.md, verify git state, print next step, wait for user "go".
+description: Resume session from handoff.md
 argument-hint: [optional path override, defaults to ./handoff.md]
 allowed-tools: Bash, Read
 ---

@@ -1,5 +1,5 @@
 ---
-description: Dump session state to handoff.md. Survives /clear, tool switch, new chat.
+description: Dump session state to handoff.md
 argument-hint: [optional path override, defaults to ./handoff.md]
 allowed-tools: Bash, Read, Write, Edit, Grep, Glob
 ---
