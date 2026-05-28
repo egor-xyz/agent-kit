@@ -1,7 +1,6 @@
 ---
 name: handoff-resume
 description: Use when starting a session after /handoff was run in a previous session - load .agents/handoff.md, verify git state matches what the previous session expected, print Target + Next Step verbatim, and wait for the user's "go" before doing anything.
-allowed-tools: Bash, Read
 ---
 
 # handoff-resume — load session state
