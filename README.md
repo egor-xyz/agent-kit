@@ -14,22 +14,22 @@ Skills, commands, hooks, and configs that survive tool switches.</p>
 
 ---
 
-> Your agent session dies. Your work shouldn't. **agent-kit** ships portable workflows — starting with `/handoff` + `/handoff-resume` — that move state between sessions and tools.
+> Your agent session dies. Your work shouldn't. **agent-kit** ships portable workflows — starting with `/agent-kit:handoff` + `/agent-kit:handoff-resume` — that move state between sessions and tools.
 
 ## Demo
 
 ```
 you:    refactor auth middleware to use new token store
 agent:  <40 tool calls, hits a wall>
-you:    /handoff                       ←  dump state
-you:    /clear                         ←  wipe context
-you:    /handoff-resume                        ←  load state, no re-explaining
+you:    /agent-kit:handoff              ←  dump state
+you:    /clear                          ←  wipe context
+you:    /agent-kit:handoff-resume       ←  load state, no re-explaining
 agent:  === RESUMING SESSION ===
         Target: refactor auth middleware to new token store
         Branch: refactor/auth [MATCH]
         Next step: fix assertion in tests/auth/test_login.py:42
         [waits]
-you:    go
+you:    go                              ←  any affirmative: "go", "yes", "continue"
 agent:  <continues exactly where it stopped>
 ```
 
@@ -41,19 +41,21 @@ Same workflow, any tool. `/handoff` in Claude Code → `/clear` → switch to Cu
 
 ```
 /plugin marketplace add egor-xyz/agent-kit
-/plugin install session-handoff@agent-kit
+/plugin install agent-kit@egor-xyz
 ```
+
+Then invoke as `/agent-kit:handoff` and `/agent-kit:handoff-resume`.
 
 ### Any other tool (one line)
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/egor-xyz/agent-kit/main/install.sh | sh -s -- session-handoff --cursor
+curl -fsSL https://raw.githubusercontent.com/egor-xyz/agent-kit/main/install.sh | sh -s -- agent-kit --cursor
 ```
 
 Replace `--cursor` with any of `--codex`, `--gemini`, `--copilot`, `--claude`, or `--all`. Combine flags to install everywhere at once:
 
 ```bash
-curl -fsSL .../install.sh | sh -s -- session-handoff --cursor --codex --gemini --copilot
+curl -fsSL .../install.sh | sh -s -- agent-kit --cursor --codex --gemini --copilot
 ```
 
 Browse what's available:
@@ -62,11 +64,13 @@ Browse what's available:
 curl -fsSL .../install.sh | sh -s -- --list
 ```
 
+In tools without namespacing, the commands are plain `/handoff` and `/handoff-resume`.
+
 ### Install matrix
 
 | Tool | Path | Install command |
 | --- | --- | --- |
-| Claude Code | plugin cache | `/plugin install session-handoff@agent-kit` |
+| Claude Code | plugin cache | `/plugin install agent-kit@egor-xyz` |
 | Cursor | `~/.cursor/commands/` | `curl … --cursor` |
 | Codex | `~/.codex/prompts/` | `curl … --codex` |
 | Gemini | `~/.gemini/commands/` | `curl … --gemini` |
@@ -80,16 +84,16 @@ Override target paths with env vars: `AGENT_KIT_CURSOR_DIR`, `AGENT_KIT_CODEX_DI
    work...
      │
      ▼
-  /handoff      ─▶  writes handoff.md (target, state, files, changes, dead ends, next step)
+  /agent-kit:handoff         ─▶  writes handoff.md (target, state, files, changes, dead ends, next step)
      │
      ▼
-   /clear       ─▶  fresh context
+   /clear                    ─▶  fresh context
      │
      ▼
-   /handoff-resume      ─▶  reads handoff.md, verifies git state, echoes next step, WAITS
+   /agent-kit:handoff-resume ─▶  reads handoff.md, verifies git state, echoes next step, WAITS
      │
      ▼
-   "go"         ─▶  agent continues exactly where the previous session stopped
+   "go"                      ─▶  agent continues exactly where the previous session stopped
 ```
 
 Canonical `handoff.md` schema: [`docs/handoff-spec.md`](./docs/handoff-spec.md).
@@ -98,15 +102,15 @@ Canonical `handoff.md` schema: [`docs/handoff-spec.md`](./docs/handoff-spec.md).
 
 | Plugin | Description | Commands | Skills | Tools |
 | --- | --- | --- | --- | --- |
-| [`session-handoff`](./plugins/session-handoff) | Survive `/clear`, tool switches, new chats via `handoff.md`. | `/handoff`, `/handoff-resume` | `handoff-discipline` | all |
+| [`agent-kit`](./plugins/agent-kit) | Portable workflows — starting with session handoff. | `/agent-kit:handoff`, `/agent-kit:handoff-resume` | `handoff-discipline` | all |
 
-More coming. [Contribute one](./docs/CONTRIBUTING.md).
+More workflows coming as additional commands inside the same plugin (or as separate plugins for granular install). [Contribute one](./docs/CONTRIBUTING.md).
 
 ## Bundles
 
 | Bundle | Includes |
 | --- | --- |
-| [`session-management`](./bundles/session-management.json) | `session-handoff` |
+| [`session-management`](./bundles/session-management.json) | `agent-kit` |
 
 Install a bundle:
 
@@ -120,7 +124,7 @@ The space is crowded with bag-of-snippets repos. `agent-kit` is different:
 
 - **Workflow-first.** Each plugin = a cohesive workflow (commands + skills + docs), not loose snippets.
 - **Quality bar.** Every plugin documents Purpose, When to Use, When NOT to Use, Example, Install. Enforced by CI. See [`docs/quality-bar.md`](./docs/quality-bar.md).
-- **Handoff-native.** Sessions are disposable. Every plugin that produces stateful work documents how it integrates with `/handoff`.
+- **Handoff-native.** Sessions are disposable. Every workflow that produces stateful work documents how it integrates with `/agent-kit:handoff`.
 - **Portable by design.** Single source of truth (Claude Code plugin format); other tools generated at install.
 
 ## Add your own
@@ -134,7 +138,7 @@ The space is crowded with bag-of-snippets repos. `agent-kit` is different:
 
 ```
 agent-kit/
-├── .claude-plugin/marketplace.json   # Claude Code marketplace catalog
+├── .claude-plugin/marketplace.json   # Claude Code marketplace catalog (name: egor-xyz)
 ├── plugins/<name>/                   # canonical plugin source
 ├── bundles/<theme>.json              # themed plugin groups
 ├── install.sh                        # universal installer

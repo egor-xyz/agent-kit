@@ -8,7 +8,7 @@ This file is read by Codex CLI, Cursor, and other agent tools that look for an `
 
 ## Flagship workflow
 
-**Session handoff.** Agent sessions are disposable; work-in-progress is not. The plugin `session-handoff` ships two commands:
+**Session handoff.** Agent sessions are disposable; work-in-progress is not. The plugin `agent-kit` ships two commands:
 
 - `/handoff` — dump current session state to `handoff.md` (target, files under work, changes made, dead ends, next step).
 - `/handoff-resume` — read `handoff.md`, verify git state, print Target + Next Step, **wait for user confirmation**.
