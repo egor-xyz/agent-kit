@@ -1,15 +1,15 @@
-# session-handoff
+# agent-kit
 
-> Dump and resume agent session state via `handoff.md`. Survives `/clear`, tool switch, or new chat.
+> Portable workflows for coding agents. First workflow: session handoff via `handoff.md` — survives `/clear`, tool switches, and new chats.
 
 ## Purpose
 
-Agent sessions are disposable. Work-in-progress shouldn't be. This plugin ships two commands and one skill so that any long task ends with a portable state file (`handoff.md`) that any agent (same tool or different) can pick up cold.
+Agent sessions are disposable. Work-in-progress shouldn't be. This plugin ships portable workflows that move state between sessions and tools. The first one is **session handoff**: two commands and a skill that dump and reload session state via a `handoff.md` file readable by any agent on any tool.
 
 ## Workflow
 
 ```
-work...  →  /handoff  →  /clear  →  /handoff-resume  →  confirm  →  continue
+work...  →  /agent-kit:handoff  →  /clear  →  /agent-kit:handoff-resume  →  "go"  →  continue
 ```
 
 ## When to use
@@ -28,8 +28,10 @@ work...  →  /handoff  →  /clear  →  /handoff-resume  →  confirm  →  co
 
 | Command | Purpose |
 | --- | --- |
-| `/handoff` | Dump current session state to `handoff.md` (auto-populates git state). |
-| `/handoff-resume` | Read `handoff.md`, verify git state, print Target + Next Step, **wait for user "go"**. |
+| `/agent-kit:handoff` | Dump current session state to `handoff.md` (auto-populates git state). |
+| `/agent-kit:handoff-resume` | Read `handoff.md`, verify git state, print Target + Next Step, **wait for user "go"**. |
+
+In tools without namespacing (Cursor, Codex, Gemini, Copilot) the commands are typed as `/handoff` and `/handoff-resume`.
 
 ## Skill
 
@@ -43,27 +45,27 @@ work...  →  /handoff  →  /clear  →  /handoff-resume  →  confirm  →  co
 
 ```
 /plugin marketplace add egor-xyz/agent-kit
-/plugin install session-handoff@agent-kit
+/plugin install agent-kit@egor-xyz
 ```
 
 ### Other tools (shell installer)
 
 ```bash
 # one tool
-curl -fsSL https://raw.githubusercontent.com/egor-xyz/agent-kit/main/install.sh | sh -s -- session-handoff --cursor
+curl -fsSL https://raw.githubusercontent.com/egor-xyz/agent-kit/main/install.sh | sh -s -- agent-kit --cursor
 
 # multiple
-curl -fsSL https://raw.githubusercontent.com/egor-xyz/agent-kit/main/install.sh | sh -s -- session-handoff --cursor --codex --gemini --copilot
+curl -fsSL https://raw.githubusercontent.com/egor-xyz/agent-kit/main/install.sh | sh -s -- agent-kit --cursor --codex --gemini --copilot
 
 # everything detected on the machine
-curl -fsSL https://raw.githubusercontent.com/egor-xyz/agent-kit/main/install.sh | sh -s -- session-handoff --all
+curl -fsSL https://raw.githubusercontent.com/egor-xyz/agent-kit/main/install.sh | sh -s -- agent-kit --all
 ```
 
 ### Install matrix
 
 | Tool | Target location | Native install |
 | --- | --- | --- |
-| Claude Code | `~/.claude/commands/` (or plugin cache) | `/plugin install session-handoff@agent-kit` |
+| Claude Code | plugin cache | `/plugin install agent-kit@egor-xyz` |
 | Cursor | `~/.cursor/commands/` | shell installer |
 | Codex | `~/.codex/prompts/` | shell installer |
 | Gemini | `~/.gemini/commands/` | shell installer |
@@ -74,17 +76,17 @@ curl -fsSL https://raw.githubusercontent.com/egor-xyz/agent-kit/main/install.sh 
 ```
 You: refactor the auth middleware to use the new token store
 Agent: <does 40 tool calls, hits a wall>
-You: /handoff
+You: /agent-kit:handoff
 Agent: wrote handoff.md — next step: fix the assertion in tests/auth/test_login.py:42
 
 You: /clear
-You: /handoff-resume
+You: /agent-kit:handoff-resume
 Agent: === RESUMING SESSION ===
        Target: refactor auth middleware to new token store
        Branch: refactor/auth (handoff said: refactor/auth) [MATCH]
        Next step: fix the assertion in tests/auth/test_login.py:42
        [waits]
-You: go
+You: go        ← any affirmative: "go", "yes", "continue", "ok"
 Agent: <continues exactly where it stopped>
 ```
 
