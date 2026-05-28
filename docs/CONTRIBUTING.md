@@ -113,6 +113,40 @@ PR body: brief description, link to the quality-bar checklist, screenshots/GIFs 
 - **No AI attribution.** No `Co-Authored-By: Claude`, no "Generated with…" lines anywhere.
 - **No absolute user paths.** No `/Users/<you>/...`. Use `~` or repo-relative.
 
+## Commit messages — Conventional Commits
+
+All commits and PR titles follow [Conventional Commits](https://www.conventionalcommits.org/).
+
+Format:
+
+```
+<type>(<scope>)?: <subject>
+
+[optional body]
+
+[optional footer]
+```
+
+**Allowed types:** `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`, `revert`.
+
+Examples:
+
+```
+feat(plugins): add code-review plugin
+fix(install): handle missing curl on busybox
+docs: explain handoff schema in CONTRIBUTING
+refactor(transforms): consolidate frontmatter parsers
+ci: add commitlint workflow
+```
+
+CI runs `commitlint` on every PR. The PR title and every commit in the PR must match.
+
+## Plugin updates
+
+The marketplace omits `version` from each plugin entry — every commit on `main` counts as a new version. Users get latest changes by running `/plugin marketplace update egor-xyz` followed by **Update now** in the plugin manager.
+
+If you need to pin to a stable release, tag the commit (`git tag v0.2.0`) and add `"version": "0.2.0"` to the plugin entry for that release branch.
+
 ## Merging vs duplicating
 
 If a plugin with similar purpose exists, open an issue first to discuss merging or coexistence. We will close duplicate plugins.

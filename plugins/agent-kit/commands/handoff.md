@@ -1,12 +1,12 @@
 ---
-description: Dump session state to handoff.md
-argument-hint: [optional path override, defaults to ./handoff.md]
+description: Dump session state to .agents/handoff.md
+argument-hint: [optional path override, defaults to .agents/handoff.md]
 allowed-tools: Bash, Read, Write, Edit, Grep, Glob
 ---
 
 # /handoff — dump session state
 
-Write a minimal `handoff.md` so a fresh agent can resume. **Be brief.** Bullets, not prose. Skip empty sections.
+Write a minimal `.agents/handoff.md` so a fresh agent can resume. **Be brief.** Bullets, not prose. Skip empty sections. Create the `.agents/` directory if it doesn't exist.
 
 ## Workflow
 
@@ -14,7 +14,7 @@ Write a minimal `handoff.md` so a fresh agent can resume. **Be brief.** Bullets,
    ```
    git rev-parse --abbrev-ref HEAD && git log -1 --oneline && git status --short
    ```
-2. **Write `handoff.md`** using the schema below. Overwrite if exists.
+2. **Write `.agents/handoff.md`** using the schema below. `mkdir -p .agents` first. Overwrite if file exists.
 3. **Report** the path and a one-line next-step summary. Stop.
 
 ## Schema

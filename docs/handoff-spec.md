@@ -1,12 +1,12 @@
 # handoff.md — canonical schema
 
-`handoff.md` is the portable state artifact produced by `/agent-kit:handoff` and consumed by `/agent-kit:handoff-resume`. Must be readable cold by any agent on any tool. **Keep it brief.** Bullets, not prose. Skip empty sections.
+`.agents/handoff.md` is the portable state artifact produced by `/agent-kit:handoff` and consumed by `/agent-kit:handoff-resume`. Must be readable cold by any agent on any tool. **Keep it brief.** Bullets, not prose. Skip empty sections.
 
 ## File location
 
-- Default: `./handoff.md` at repo root.
+- Default: `.agents/handoff.md` at repo root.
 - Override: argument to either command.
-- **Not committed.** Add to `.gitignore`.
+- **Not committed.** Add `.agents/` to `.gitignore`.
 
 ## Header
 
