@@ -1,7 +1,6 @@
 ---
 name: handoff
 description: Use when ending a session with work still in flight - dump session state to .agents/handoff.md (target, git state, files, changes, dead ends, next step) so any agent on any tool can resume cold after /clear, a tool switch, or a new chat.
-allowed-tools: Bash, Read, Write, Edit, Grep, Glob
 ---
 
 # handoff — dump session state
