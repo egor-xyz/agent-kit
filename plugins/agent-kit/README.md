@@ -34,6 +34,12 @@ work...  →  /handoff  →  /clear  →  /handoff-resume  →  "go"  →  conti
 
 In tools without namespacing (Cursor, Codex, Gemini, Copilot) the commands are typed as `/handoff`, `/handoff-resume`, and `/handoff-clear`.
 
+## Skill
+
+| Skill | Trigger |
+| --- | --- |
+| `auto-handoff` | Auto-triggers on long, risky, or session-spanning work to keep `.agents/handoff.md` fresh mid-flight. **Not a slash command** — no need to invoke manually. |
+
 ## Install
 
 ### Claude Code (native)
