@@ -9,7 +9,7 @@ Agent sessions are disposable. Work-in-progress shouldn't be. This plugin ships 
 ## Workflow
 
 ```
-work...  →  /handoff  →  /clear  →  /resume  →  confirm  →  continue
+work...  →  /handoff  →  /clear  →  /handoff-resume  →  confirm  →  continue
 ```
 
 ## When to use
@@ -29,7 +29,7 @@ work...  →  /handoff  →  /clear  →  /resume  →  confirm  →  continue
 | Command | Purpose |
 | --- | --- |
 | `/handoff` | Dump current session state to `handoff.md` (auto-populates git state). |
-| `/resume` | Read `handoff.md`, verify git state, print Target + Next Step, **wait for "go"**. |
+| `/handoff-resume` | Read `handoff.md`, verify git state, print Target + Next Step, **wait for user "go"**. |
 
 ## Skill
 
@@ -78,7 +78,7 @@ You: /handoff
 Agent: wrote handoff.md — next step: fix the assertion in tests/auth/test_login.py:42
 
 You: /clear
-You: /resume
+You: /handoff-resume
 Agent: === RESUMING SESSION ===
        Target: refactor auth middleware to new token store
        Branch: refactor/auth (handoff said: refactor/auth) [MATCH]

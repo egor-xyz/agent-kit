@@ -14,7 +14,7 @@ Skills, commands, hooks, and configs that survive tool switches.</p>
 
 ---
 
-> Your agent session dies. Your work shouldn't. **agent-kit** ships portable workflows — starting with `/handoff` and `/resume` — that move state between sessions and tools.
+> Your agent session dies. Your work shouldn't. **agent-kit** ships portable workflows — starting with `/handoff` + `/handoff-resume` — that move state between sessions and tools.
 
 ## Demo
 
@@ -23,7 +23,7 @@ you:    refactor auth middleware to use new token store
 agent:  <40 tool calls, hits a wall>
 you:    /handoff                       ←  dump state
 you:    /clear                         ←  wipe context
-you:    /resume                        ←  load state, no re-explaining
+you:    /handoff-resume                        ←  load state, no re-explaining
 agent:  === RESUMING SESSION ===
         Target: refactor auth middleware to new token store
         Branch: refactor/auth [MATCH]
@@ -33,7 +33,7 @@ you:    go
 agent:  <continues exactly where it stopped>
 ```
 
-Same workflow, any tool. `/handoff` in Claude Code → `/clear` → switch to Cursor → `/resume`. Same `handoff.md`, same state.
+Same workflow, any tool. `/handoff` in Claude Code → `/clear` → switch to Cursor → `/handoff-resume`. Same `handoff.md`, same state.
 
 ## Install
 
@@ -86,7 +86,7 @@ Override target paths with env vars: `AGENT_KIT_CURSOR_DIR`, `AGENT_KIT_CODEX_DI
    /clear       ─▶  fresh context
      │
      ▼
-   /resume      ─▶  reads handoff.md, verifies git state, echoes next step, WAITS
+   /handoff-resume      ─▶  reads handoff.md, verifies git state, echoes next step, WAITS
      │
      ▼
    "go"         ─▶  agent continues exactly where the previous session stopped
@@ -98,7 +98,7 @@ Canonical `handoff.md` schema: [`docs/handoff-spec.md`](./docs/handoff-spec.md).
 
 | Plugin | Description | Commands | Skills | Tools |
 | --- | --- | --- | --- | --- |
-| [`session-handoff`](./plugins/session-handoff) | Survive `/clear`, tool switches, new chats via `handoff.md`. | `/handoff`, `/resume` | `handoff-discipline` | all |
+| [`session-handoff`](./plugins/session-handoff) | Survive `/clear`, tool switches, new chats via `handoff.md`. | `/handoff`, `/handoff-resume` | `handoff-discipline` | all |
 
 More coming. [Contribute one](./docs/CONTRIBUTING.md).
 

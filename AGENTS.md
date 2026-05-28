@@ -11,9 +11,9 @@ This file is read by Codex CLI, Cursor, and other agent tools that look for an `
 **Session handoff.** Agent sessions are disposable; work-in-progress is not. The plugin `session-handoff` ships two commands:
 
 - `/handoff` — dump current session state to `handoff.md` (target, files under work, changes made, dead ends, next step).
-- `/resume` — read `handoff.md`, verify git state, print Target + Next Step, **wait for user confirmation**.
+- `/handoff-resume` — read `handoff.md`, verify git state, print Target + Next Step, **wait for user confirmation**.
 
-Workflow: `work → /handoff → /clear → /resume → confirm → continue`.
+Workflow: `work → /handoff → /clear → /handoff-resume → confirm → continue`.
 
 If you (the agent) are working on a long task that may outlast this session, write `handoff.md` proactively. See [`docs/handoff-spec.md`](./docs/handoff-spec.md) for the canonical schema.
 

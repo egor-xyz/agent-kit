@@ -16,7 +16,7 @@ Every plugin in `agent-kit` clears this bar before merge. Quality > quantity. Th
 
 3. **Workflow cohesion.** If your plugin ships multiple artifacts (commands + skills + hooks), they must serve **one** workflow. If they don't, split into multiple plugins.
 
-4. **Handoff integration.** If the plugin produces stateful work that may outlast a session, document explicitly how it interacts with `/handoff` and `/resume`. If it doesn't produce stateful work, say so.
+4. **Handoff integration.** If the plugin produces stateful work that may outlast a session, document explicitly how it interacts with `/handoff` and `/handoff-resume`. If it doesn't produce stateful work, say so.
 
 5. **No secrets.** No API keys, tokens, credentials anywhere.
 
