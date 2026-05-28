@@ -1,0 +1,59 @@
+{
+  "branches": ["main"],
+  "plugins": [
+    [
+      "@semantic-release/commit-analyzer",
+      {
+        "preset": "conventionalcommits",
+        "releaseRules": [
+          { "type": "docs", "release": "patch" },
+          { "type": "refactor", "release": "patch" },
+          { "type": "perf", "release": "patch" },
+          { "type": "style", "release": false },
+          { "type": "test", "release": false },
+          { "type": "build", "release": "patch" },
+          { "type": "ci", "release": false },
+          { "type": "chore", "release": false },
+          { "scope": "no-release", "release": false }
+        ]
+      }
+    ],
+    [
+      "@semantic-release/release-notes-generator",
+      {
+        "preset": "conventionalcommits"
+      }
+    ],
+    [
+      "@semantic-release/changelog",
+      {
+        "changelogFile": "CHANGELOG.md",
+        "changelogTitle": "# Changelog\n\nAll notable changes to this project will be documented in this file."
+      }
+    ],
+    [
+      "@semantic-release/exec",
+      {
+        "prepareCmd": "jq --arg v \"${nextRelease.version}\" '.version = $v' plugins/agent-kit/.claude-plugin/plugin.json > plugins/agent-kit/.claude-plugin/plugin.json.tmp && mv plugins/agent-kit/.claude-plugin/plugin.json.tmp plugins/agent-kit/.claude-plugin/plugin.json && jq --arg v \"${nextRelease.version}\" '(.plugins[] | select(.name == \"agent-kit\")) |= (. + {version: $v})' .claude-plugin/marketplace.json > .claude-plugin/marketplace.json.tmp && mv .claude-plugin/marketplace.json.tmp .claude-plugin/marketplace.json"
+      }
+    ],
+    [
+      "@semantic-release/git",
+      {
+        "assets": [
+          "CHANGELOG.md",
+          "plugins/agent-kit/.claude-plugin/plugin.json",
+          ".claude-plugin/marketplace.json"
+        ],
+        "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+      }
+    ],
+    [
+      "@semantic-release/github",
+      {
+        "successComment": false,
+        "failTitle": false
+      }
+    ]
+  ]
+}
