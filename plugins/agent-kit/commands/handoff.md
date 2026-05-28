@@ -1,11 +1,11 @@
 ---
-name: handoff
-description: Use when ending a session with work still in flight - dump session state to .agents/handoff.md (target, git state, files, changes, dead ends, next step) so any agent on any tool can resume cold after /clear, a tool switch, or a new chat.
+description: Dump session state to .agents/handoff.md so any agent on any tool can resume cold after /clear, a tool switch, or a new chat.
+allowed-tools: Bash, Read, Write, Edit
 ---
 
 # handoff — dump session state
 
-Invoked manually via `/handoff` when the user wants to checkpoint, or auto-invoked when this description matches their intent. Write a minimal `.agents/handoff.md` so a fresh agent can resume. **Be brief.** Bullets, not prose. Skip empty sections. Create `.agents/` if it doesn't exist.
+Write a minimal `.agents/handoff.md` so a fresh agent can resume. **Be brief.** Bullets, not prose. Skip empty sections. Create `.agents/` if it doesn't exist.
 
 ## Workflow
 
