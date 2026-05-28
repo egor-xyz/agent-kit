@@ -1,6 +1,6 @@
 # handoff.md — canonical schema
 
-`.agents/handoff.md` is the portable state artifact produced by `/agent-kit:handoff` and consumed by `/agent-kit:handoff-resume`. Must be readable cold by any agent on any tool. **Keep it brief.** Bullets, not prose. Skip empty sections.
+`.agents/handoff.md` is the portable state artifact produced by `/handoff` and consumed by `/handoff-resume`. Must be readable cold by any agent on any tool. **Keep it brief.** Bullets, not prose. Skip empty sections.
 
 ## File location
 
