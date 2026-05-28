@@ -1,0 +1,67 @@
+name: validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate JSON files
+        run: |
+          set -e
+          failed=0
+          for f in .claude-plugin/marketplace.json plugins/*/.claude-plugin/plugin.json bundles/*.json; do
+            [ -f "$f" ] || continue
+            if ! python3 -c "import json,sys; json.load(open('$f'))" 2>/dev/null; then
+              echo "::error file=$f::invalid JSON"
+              failed=1
+            fi
+          done
+          exit $failed
+
+      - name: Check plugin READMEs have required H2 sections
+        run: |
+          set -e
+          failed=0
+          required="## Purpose|## When to Use|## When NOT to Use|## Example|## Install"
+          for readme in plugins/*/README.md; do
+            for section in "## Purpose" "## When to Use" "## When NOT to Use" "## Example" "## Install"; do
+              if ! grep -q "^$section" "$readme"; then
+                echo "::error file=$readme::missing required H2 section: $section"
+                failed=1
+              fi
+            done
+          done
+          exit $failed
+
+      - name: Forbid user-absolute paths
+        run: |
+          set -e
+          if grep -rnE '/(Users|home)/[a-zA-Z0-9_.-]+/' \
+              --include="*.md" --include="*.json" --include="*.sh" \
+              --exclude-dir=.git --exclude-dir=docs/superpowers .; then
+            echo "::error::user-absolute path detected (use ~ or repo-relative)"
+            exit 1
+          fi
+
+      - name: Forbid AI attribution lines
+        run: |
+          set -e
+          if grep -rnE '(Co-Authored-By:.*Claude|Generated with .*Claude|🤖 Generated)' \
+              --include="*.md" --include="*.json" --include="*.sh" \
+              --exclude-dir=.git --exclude-dir=docs/superpowers .; then
+            echo "::error::AI attribution line detected"
+            exit 1
+          fi
+
+      - name: Shellcheck transforms and installer
+        uses: ludeeus/action-shellcheck@master
+        with:
+          severity: warning
+          scandir: '.'
+          additional_files: install.sh

@@ -1,0 +1,7 @@
+{
+  "name": "session-management",
+  "description": "Plugins for surviving session boundaries — handoff, resume, and friends.",
+  "plugins": [
+    "session-handoff"
+  ]
+}
