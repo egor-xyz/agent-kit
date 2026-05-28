@@ -1,6 +1,6 @@
 ---
-description: Dump session state to .agents/handoff.md so any agent on any tool can resume cold after /clear, a tool switch, or a new chat.
 allowed-tools: Bash, Read, Write, Edit
+description: Dump session state to .agents/handoff.md
 ---
 
 # handoff — dump session state
