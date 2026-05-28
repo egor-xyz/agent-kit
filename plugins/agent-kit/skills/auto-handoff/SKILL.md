@@ -1,6 +1,6 @@
 ---
 name: auto-handoff
-description: Auto-triggers during long, risky, or session-spanning work to keep handoff.md fresh mid-flight — so /clear or a tool switch is always safe. No need to invoke manually. Fires when conversation passes ~30 tool calls, before risky multi-session work (refactor, migration, dep bump), when the user signals they may stop or switch tools, or when the branch has diverged with non-trivial WIP.
+description: Auto-keeps handoff.md fresh during long, risky, or session-spanning work. Not a manual command. Fires on long conversations (~30+ tool calls), risky multi-session work (refactor, migration, dep bump), user signals to stop or switch tools, or non-trivial WIP on a diverged branch.
 ---
 
 # auto-handoff

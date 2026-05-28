@@ -1,5 +1,5 @@
 ---
-description: Read handoff.md, verify git state matches, echo target + next step, wait for user confirm before doing anything.
+description: Load handoff.md, verify git state, print next step, wait for user "go".
 argument-hint: [optional path override, defaults to ./handoff.md]
 allowed-tools: Bash, Read
 ---
