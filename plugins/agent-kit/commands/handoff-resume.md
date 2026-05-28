@@ -1,6 +1,6 @@
 ---
-description: Load .agents/handoff.md, verify git state matches what the previous session expected, print Target + Next Step verbatim, then wait for the user's "go" before doing anything.
 allowed-tools: Bash, Read
+description: Load .agents/handoff.md and resume session
 ---
 
 # handoff-resume — load session state
