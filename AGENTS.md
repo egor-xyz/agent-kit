@@ -10,12 +10,12 @@ This file is read by Codex CLI, Cursor, and other agent tools that look for an `
 
 **Session handoff.** Agent sessions are disposable; work-in-progress is not. The plugin `agent-kit` ships two commands:
 
-- `/handoff` — dump current session state to `handoff.md` (target, files under work, changes made, dead ends, next step).
-- `/handoff-resume` — read `handoff.md`, verify git state, print Target + Next Step, **wait for user confirmation**.
+- `/handoff` — dump current session state to `.agents/handoff.md` (target, files under work, changes made, dead ends, next step).
+- `/handoff-resume` — read `.agents/handoff.md`, verify git state, print Target + Next Step, **wait for user confirmation**.
 
 Workflow: `work → /handoff → /clear → /handoff-resume → confirm → continue`.
 
-If you (the agent) are working on a long task that may outlast this session, write `handoff.md` proactively. See [`docs/handoff-spec.md`](./docs/handoff-spec.md) for the canonical schema.
+If you (the agent) are working on a long task that may outlast this session, write `.agents/handoff.md` proactively. See [`docs/handoff-spec.md`](./docs/handoff-spec.md) for the canonical schema.
 
 ## Repo layout (quick reference)
 
@@ -23,7 +23,7 @@ If you (the agent) are working on a long task that may outlast this session, wri
 - `install.sh` — universal installer for Cursor/Codex/Gemini/Copilot.
 - `lib/transforms/<tool>.sh` — per-tool frontmatter transforms.
 - `docs/quality-bar.md` — the bar for new plugins.
-- `docs/handoff-spec.md` — `handoff.md` schema.
+- `docs/handoff-spec.md` — schema for `.agents/handoff.md`.
 - `docs/tool-mapping.md` — how the canonical format maps to other tools.
 - `docs/CONTRIBUTING.md` — how to add a plugin.
 

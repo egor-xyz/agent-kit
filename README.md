@@ -33,7 +33,7 @@ you:    go                              ←  any affirmative: "go", "yes", "cont
 agent:  <continues exactly where it stopped>
 ```
 
-Same workflow, any tool. `/handoff` in Claude Code → `/clear` → switch to Cursor → `/handoff-resume`. Same `handoff.md`, same state.
+Same workflow, any tool. `/handoff` in Claude Code → `/clear` → switch to Cursor → `/handoff-resume`. Same `.agents/handoff.md`, same state.
 
 ## Install
 
@@ -78,25 +78,38 @@ In tools without namespacing, the commands are plain `/handoff` and `/handoff-re
 
 Override target paths with env vars: `AGENT_KIT_CURSOR_DIR`, `AGENT_KIT_CODEX_DIR`, `AGENT_KIT_GEMINI_DIR`, `AGENT_KIT_COPILOT_DIR`, `AGENT_KIT_CLAUDE_DIR`.
 
+### Updating
+
+Claude Code:
+```
+/plugin marketplace update egor-xyz
+```
+Then open the plugin manager (`/plugin`), select `agent-kit`, choose **Update now**. The marketplace omits `version` from the plugin entry, so every commit on `main` ships as a new version.
+
+Other tools: re-run the install command with `--force`:
+```bash
+curl -fsSL .../install.sh | sh -s -- agent-kit --cursor --force
+```
+
 ## Flagship workflow — Session Handoff
 
 ```
    work...
      │
      ▼
-  /agent-kit:handoff         ─▶  writes handoff.md (target, state, files, changes, dead ends, next step)
+  /agent-kit:handoff         ─▶  writes .agents/handoff.md (target, state, files, changes, dead ends, next step)
      │
      ▼
    /clear                    ─▶  fresh context
      │
      ▼
-   /agent-kit:handoff-resume ─▶  reads handoff.md, verifies git state, echoes next step, WAITS
+   /agent-kit:handoff-resume ─▶  reads .agents/handoff.md, verifies git state, echoes next step, WAITS
      │
      ▼
    "go"                      ─▶  agent continues exactly where the previous session stopped
 ```
 
-Canonical `handoff.md` schema: [`docs/handoff-spec.md`](./docs/handoff-spec.md).
+Canonical schema: [`docs/handoff-spec.md`](./docs/handoff-spec.md).
 
 ## Plugins
 
