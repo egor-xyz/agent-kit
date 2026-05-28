@@ -28,10 +28,11 @@ work...  →  /handoff  →  /clear  →  /handoff-resume  →  "go"  →  conti
 
 | Command | Purpose |
 | --- | --- |
-| `/handoff` | Dump current session state to `.agents/handoff.md` (auto-populates git state). |
+| `/handoff` | Dump current session state to `.agents/handoff.md` (auto-populates git state). Overwrites any existing file. |
 | `/handoff-resume` | Read `.agents/handoff.md`, verify git state, print Target + Next Step, **wait for user "go"**. |
+| `/handoff-clear` | Delete `.agents/handoff.md`. Use when the handoff is stale and you want a clean slate before the next `/handoff`. |
 
-In tools without namespacing (Cursor, Codex, Gemini, Copilot) the commands are typed as `/handoff` and `/handoff-resume`.
+In tools without namespacing (Cursor, Codex, Gemini, Copilot) the commands are typed as `/handoff`, `/handoff-resume`, and `/handoff-clear`.
 
 ## Skill
 
